@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => false,
+  'namespace' => 'mapstv',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '3101fb76d490802d5b95d102e983c9cd',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => '464202d5e8e9373e73e85fc643753373',
+  'native_key' => 'mapstv.api_key',
+  'object' => '{"key":"mapstv.api_key","value":"","xtype":"textfield","namespace":"mapstv","area":"general","editedon":null}',
+);

@@ -1,0 +1,159 @@
+<?php return array (
+  'unique_key' => 'category',
+  'preserve_keys' => false,
+  'update_object' => true,
+  'related_objects' => 
+  array (
+    'Snippets' => 
+    array (
+      'be9015ebe1b99edd3baae47e065ce141' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":null,"source":0,"property_preprocess":0,"name":"JSONtoChunk","description":"Custom output filter. If the input is an JSON array it will output the chunk you specified with placeholders for all the values.","editor_type":0,"category":0,"cache_type":0,"snippet":"\\/**\\n * JSONtoChunk\\n * Custom output filter. If the input is an JSON array it will output the chunk you specified with placeholders for all the values\\n *\\n * Usage: [[*tvValue:JSONtoChunk=`ChunkName`]]\\n * Usage inside chunk: [[+key]]\\n *\\n * @author Sterc <modx+mapstv@sterc.nl>\\n *\\/\\n$output = $input;\\n$array = $modx->fromJSON($input);\\nif (count($array) > 0) {\\n    $chunk = $modx->getObject(\'modChunk\', array(\'name\' => $options));\\n    if ($chunk) {\\n        $output = $chunk->process($array);\\n    }\\n}\\nreturn $output;","locked":0,"properties":"a:0:{}","moduleguid":"","static":0,"static_file":"","content":"\\/**\\n * JSONtoChunk\\n * Custom output filter. If the input is an JSON array it will output the chunk you specified with placeholders for all the values\\n *\\n * Usage: [[*tvValue:JSONtoChunk=`ChunkName`]]\\n * Usage inside chunk: [[+key]]\\n *\\n * @author Sterc <modx+mapstv@sterc.nl>\\n *\\/\\n$output = $input;\\n$array = $modx->fromJSON($input);\\nif (count($array) > 0) {\\n    $chunk = $modx->getObject(\'modChunk\', array(\'name\' => $options));\\n    if ($chunk) {\\n        $output = $chunk->process($array);\\n    }\\n}\\nreturn $output;"}',
+        'guid' => '21a1f9ac3104e8f82c35bda1db568c18',
+        'native_key' => NULL,
+        'signature' => '1d5b43701ce9a73f512c041c7cffdebc',
+      ),
+    ),
+    'Plugins' => 
+    array (
+      '0c61babdefc991ac8c3445250d6aa74e' => 
+      array (
+        'unique_key' => 'name',
+        'preserve_keys' => false,
+        'update_object' => true,
+        'related_objects' => 
+        array (
+          'PluginEvents' => 
+          array (
+            '2691f3a9dfab26b06457a9ef9ff01c11' => 
+            array (
+              'class' => 'modPluginEvent',
+              'object' => '{"pluginid":0,"event":"OnTVInputRenderList","priority":0,"propertyset":0}',
+              'guid' => '977b9644b89dd8adc5f3d6825c8dec1e',
+              'native_key' => 
+              array (
+                0 => 0,
+                1 => 'OnTVInputRenderList',
+              ),
+              'signature' => 'f4778fd3c1a30c2a890bc50c1d44b646',
+            ),
+            'ec00712a7ece18a5c697abdebaad483a' => 
+            array (
+              'class' => 'modPluginEvent',
+              'object' => '{"pluginid":0,"event":"OnDocFormRender","priority":0,"propertyset":0}',
+              'guid' => 'a0fcefd4fc08d1a47adb327a4373abf3',
+              'native_key' => 
+              array (
+                0 => 0,
+                1 => 'OnDocFormRender',
+              ),
+              'signature' => '3ace6009541d302a4fa42073100b444b',
+            ),
+          ),
+        ),
+        'related_object_attributes' => 
+        array (
+          'PluginEvents' => 
+          array (
+            'preserve_keys' => true,
+            'update_object' => false,
+            'unique_key' => 
+            array (
+              0 => 'pluginid',
+              1 => 'event',
+            ),
+          ),
+        ),
+        'class' => 'modPlugin',
+        'object' => '{"id":null,"source":0,"property_preprocess":0,"name":"MapsTv","description":"MapsTv plugin for MODX Revolution","editor_type":0,"category":0,"cache_type":0,"plugincode":"\\/**\\n * MapsTv\\n *\\n * Copyright 2016 by Sterc <modx+mapstv@sterc.nl>\\n *\\n * MapsTv is free software; you can redistribute it and\\/or modify it under the\\n * terms of the GNU General Public License as published by the Free Software\\n * Foundation; either version 2 of the License, or (at your option) any later\\n * version.\\n *\\n * MapsTv is distributed in the hope that it will be useful, but WITHOUT ANY\\n * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\\n * A PARTICULAR PURPOSE. See the GNU General Public License for more details.\\n *\\n * You should have received a copy of the GNU General Public License along with\\n * MapsTv; if not, write to the Free Software Foundation, Inc., 59 Temple\\n * Place, Suite 330, Boston, MA 02111-1307 USA\\n *\\n * @package MapsTv\\n *\\/\\n\\/**\\n * Input TV render for MapsTv\'s MapsTvItem TV\\n *\\n * @package MapsTv\\n * @subpackage tv\\n *\\/\\n$corePath = $modx->getOption(\'mapstv.core_path\', null, $modx->getOption(\'core_path\').\'components\\/mapstv\\/\');\\n$assetsUrl = $modx->getOption(\'mapstv.assets_url\', null, $modx->getOption(\'assets_url\').\'components\\/mapstv\\/\');\\n\\n$modx->lexicon->load(\'mapstv:default\');\\n\\nswitch ($modx->event->name) {\\n    \\n    case \'OnTVInputRenderList\':\\n    \\t\\/\\/ Add lexicon\\n    \\t$modx->controller->addLexiconTopic(\'mapstv:default\');\\n        $modx->event->output($corePath.\'elements\\/tv\\/input\\/\');\\n        break;\\n    \\n    case \'OnDocFormRender\':\\n        \\/\\/ Add the Google Maps api to the resource form\\n        $source = \'\\/\\/maps.google.com\\/maps\\/api\\/js\';\\n        if ($modx->getOption(\'mapstv.api_key\', null, null, true)) {\\n            $source .= \'?key=\'.$modx->getOption(\'mapstv.api_key\', null, null, true);\\n        }\\n        $modx->regClientStartupScript($source);\\n        break;\\n        \\n}","locked":0,"properties":"a:0:{}","disabled":0,"moduleguid":"","static":0,"static_file":"","content":"\\/**\\n * MapsTv\\n *\\n * Copyright 2016 by Sterc <modx+mapstv@sterc.nl>\\n *\\n * MapsTv is free software; you can redistribute it and\\/or modify it under the\\n * terms of the GNU General Public License as published by the Free Software\\n * Foundation; either version 2 of the License, or (at your option) any later\\n * version.\\n *\\n * MapsTv is distributed in the hope that it will be useful, but WITHOUT ANY\\n * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\\n * A PARTICULAR PURPOSE. See the GNU General Public License for more details.\\n *\\n * You should have received a copy of the GNU General Public License along with\\n * MapsTv; if not, write to the Free Software Foundation, Inc., 59 Temple\\n * Place, Suite 330, Boston, MA 02111-1307 USA\\n *\\n * @package MapsTv\\n *\\/\\n\\/**\\n * Input TV render for MapsTv\'s MapsTvItem TV\\n *\\n * @package MapsTv\\n * @subpackage tv\\n *\\/\\n$corePath = $modx->getOption(\'mapstv.core_path\', null, $modx->getOption(\'core_path\').\'components\\/mapstv\\/\');\\n$assetsUrl = $modx->getOption(\'mapstv.assets_url\', null, $modx->getOption(\'assets_url\').\'components\\/mapstv\\/\');\\n\\n$modx->lexicon->load(\'mapstv:default\');\\n\\nswitch ($modx->event->name) {\\n    \\n    case \'OnTVInputRenderList\':\\n    \\t\\/\\/ Add lexicon\\n    \\t$modx->controller->addLexiconTopic(\'mapstv:default\');\\n        $modx->event->output($corePath.\'elements\\/tv\\/input\\/\');\\n        break;\\n    \\n    case \'OnDocFormRender\':\\n        \\/\\/ Add the Google Maps api to the resource form\\n        $source = \'\\/\\/maps.google.com\\/maps\\/api\\/js\';\\n        if ($modx->getOption(\'mapstv.api_key\', null, null, true)) {\\n            $source .= \'?key=\'.$modx->getOption(\'mapstv.api_key\', null, null, true);\\n        }\\n        $modx->regClientStartupScript($source);\\n        break;\\n        \\n}"}',
+        'guid' => 'ff2910ec800fe3f6e251abfa08ed078a',
+        'native_key' => NULL,
+        'signature' => '70bf02142726b06db79793848402ee12',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Children' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 
+      array (
+        0 => 'parent',
+        1 => 'category',
+      ),
+    ),
+    'Snippets' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Chunks' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Templates' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'templatename',
+    ),
+    'TemplateVars' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Plugins' => 
+    array (
+      'unique_key' => 'name',
+      'preserve_keys' => false,
+      'update_object' => true,
+      'related_objects' => true,
+      'related_object_attributes' => 
+      array (
+        'PluginEvents' => 
+        array (
+          'preserve_keys' => true,
+          'update_object' => false,
+          'unique_key' => 
+          array (
+            0 => 'pluginid',
+            1 => 'event',
+          ),
+        ),
+      ),
+    ),
+  ),
+  'namespace' => 'mapstv',
+  'resolve' => 
+  array (
+    0 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"mapstv-1.1.0-pl\\/modCategory\\/65e5901f112b3ad4c52bb964b443a97b\\/0\\/","target":"return MODX_ASSETS_PATH . \'components\\/\';","name":"mapstv"}',
+    ),
+    1 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"mapstv-1.1.0-pl\\/modCategory\\/65e5901f112b3ad4c52bb964b443a97b\\/1\\/","target":"return MODX_CORE_PATH . \'components\\/\';","name":"mapstv"}',
+    ),
+  ),
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '63f739fce2559c33a0f9b0370d1b91f2',
+  'package' => 'modx',
+  'class' => 'modCategory',
+  'signature' => '65e5901f112b3ad4c52bb964b443a97b',
+  'native_key' => NULL,
+  'object' => '{"id":null,"parent":0,"category":"MapsTv","rank":0}',
+);
